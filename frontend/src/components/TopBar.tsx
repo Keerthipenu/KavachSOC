@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
-  Shield, Play, RotateCcw, Zap, Sparkles, Terminal, Activity, 
-  Layers, Crosshair, Network, FileCheck, CheckCircle2, AlertTriangle, Eye
+  Shield, Play, RotateCcw, Zap, Terminal, Activity,
+  Layers, Crosshair, Network, FileCheck, CheckCircle2, AlertTriangle
 } from 'lucide-react';
 import { TabType, ScenarioType, SystemHealth, SimulatedAsset } from '../types';
 
@@ -28,13 +28,10 @@ export const TopBar: React.FC<TopBarProps> = ({
   onRunScenario,
   onReplayClick,
   onResetClick,
-  onOpenJudgeGuide,
-  health,
   isLoading,
   incidentCount,
   simulatedAssets,
 }) => {
-  const isHealthy = health?.status === 'ok';
   const isolatedCount = simulatedAssets.filter((a) => a.state === 'ISOLATED' || a.state === 'DISABLED').length;
 
   const scenarios: { key: ScenarioType; label: string }[] = [
@@ -61,74 +58,22 @@ export const TopBar: React.FC<TopBarProps> = ({
       {/* Upper Status & Brand Row */}
       <div className="px-6 py-2.5 flex items-center justify-between border-b border-slate-800/60 text-xs font-sans">
         {/* Brand */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2.5">
-            <div className="relative flex items-center justify-center w-7 h-7 rounded bg-slate-800 border border-slate-700">
-              <Shield className="w-4 h-4 text-cyan-400" />
-            </div>
-            <div>
-              <span className="text-base font-semibold text-slate-100">
-                Kavach<span className="text-cyan-400">SOC</span>
-              </span>
-              <span className="hidden xl:inline-block ml-2 text-[10px] text-slate-400 font-sans tracking-tight">
-                Agentic AI Security Operations & Threat Hunting
-              </span>
-            </div>
+        <div className="flex items-center gap-2.5">
+          <div className="relative flex items-center justify-center w-7 h-7 rounded bg-slate-800 border border-slate-700">
+            <Shield className="w-4 h-4 text-cyan-400" />
           </div>
-
-          {/* System Status Indicators (As specified in prompt) */}
-          <div className="hidden lg:flex items-center gap-4 pl-4 border-l border-slate-800 text-[11px]">
-            <div className="flex items-center gap-1.5 text-slate-300">
-              <span className="text-slate-400">SYSTEM STATUS</span>
-              <span className="flex items-center gap-1 text-emerald-400 font-bold">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                {isHealthy ? 'OPERATIONAL' : 'DEGRADED'}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-slate-300">
-              <span className="text-slate-400">EVENT STREAM</span>
-              <span className="flex items-center gap-1 text-emerald-400 font-bold">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                LIVE
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-slate-300">
-              <span className="text-slate-400">AI ANALYST</span>
-              <span className="flex items-center gap-1 text-slate-300 font-semibold">
-                <span className="w-2 h-2 rounded-full bg-cyan-500" />
-                {isLoading ? 'INVESTIGATING' : 'READY'}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-slate-300">
-              <span className="text-slate-400">SIMULATION</span>
-              <span className="flex items-center gap-1 text-cyan-400 font-bold">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                ACTIVE
-              </span>
-            </div>
+          <div>
+            <span className="text-base font-semibold text-slate-100">
+              Kavach<span className="text-cyan-400">SOC</span>
+            </span>
+            <span className="hidden xl:inline-block ml-2 text-[10px] text-slate-400 font-sans tracking-tight">
+              Agentic AI Security Operations & Threat Hunting
+            </span>
           </div>
         </div>
 
-        {/* Right Demo Toolbar & Judge Briefing */}
+        {/* Scenario controls */}
         <div className="flex items-center gap-2.5">
-          {/* Judge Fast-track */}
-          <button
-            onClick={onOpenJudgeGuide}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors font-medium"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-slate-400" />
-            <span className="hidden sm:inline">JUDGE 20-SEC BRIEFING</span>
-          </button>
-
-          {/* DEMO MODE Badge */}
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-950/40 border border-amber-800/60 text-amber-300 font-bold text-[11px]">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-            <span>DEMO MODE</span>
-          </div>
-
           {/* Scenario Selector Dropdown */}
           <select
             value={selectedScenario}
