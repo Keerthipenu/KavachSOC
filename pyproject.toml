@@ -26,5 +26,8 @@ dev = ["httpx>=0.27,<1", "pytest>=8.3,<9"]
 testpaths = ["tests"]
 addopts = "-q"
 
+[tool.vercel]
+entrypoint = "sentinel_x.api:app"
+
 [tool.setuptools.packages.find]
 include = ["sentinel_x*"]
