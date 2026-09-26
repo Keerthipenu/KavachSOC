@@ -1,0 +1,13 @@
+services:
+  sentinel-x:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: sqlite:////data/sentinel_x.db
+      DEMO_MODE: "true"
+    volumes:
+      - sentinel-data:/data
+volumes:
+  sentinel-data:
+

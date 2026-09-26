@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sentinel-x"
+version = "0.1.0"
+description = "Agentic AI security operations and threat hunting simulation"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.30,<1",
+  "sqlalchemy>=2.0,<3",
+  "pydantic>=2.8,<3",
+  "pydantic-settings>=2.4,<3",
+  "scikit-learn>=1.5,<2",
+  "pandas>=2.2,<3",
+  "networkx>=3.3,<4",
+  "langgraph>=0.2,<2",
+]
+
+[project.optional-dependencies]
+dev = ["httpx>=0.27,<1", "pytest>=8.3,<9"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools.packages.find]
+include = ["sentinel_x*"]
