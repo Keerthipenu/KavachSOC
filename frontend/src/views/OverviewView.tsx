@@ -77,12 +77,12 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
   }, [events, timelineFilter, searchQuery]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header and Live Stats Row */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-xl font-mono font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
+            <h1 className="text-xl font-sans font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
               <span className="w-2.5 h-2.5 bg-cyan-400 rounded-sm" />
               SECURITY COMMAND CENTER
             </h1>
@@ -92,7 +92,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           </div>
           <button
             onClick={onRefresh}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-slate-300 hover:text-cyan-300 bg-slate-900/80 hover:bg-slate-800 rounded border border-slate-700 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans text-slate-300 hover:text-cyan-300 bg-slate-900/80 hover:bg-slate-800 rounded border border-slate-700 transition-colors"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>SYNC DATA</span>
@@ -102,12 +102,12 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
         {/* 4 Stat Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {/* Events */}
-          <div className="p-4 rounded-lg bg-[#0d1424] border border-cyan-950/80 relative overflow-hidden">
-            <div className="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+          <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 relative overflow-hidden">
+            <div className="flex items-center justify-between text-slate-400 text-xs font-sans mb-2">
               <span>EVENTS INGESTED</span>
               <Terminal className="w-4 h-4 text-cyan-400" />
             </div>
-            <div className="text-2xl font-mono font-bold text-cyan-300">
+            <div className="text-2xl font-sans font-bold text-cyan-300">
               {events.length}
             </div>
             <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
@@ -117,12 +117,12 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           </div>
 
           {/* Alerts */}
-          <div className="p-4 rounded-lg bg-[#0d1424] border border-cyan-950/80 relative overflow-hidden">
-            <div className="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+          <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 relative overflow-hidden">
+            <div className="flex items-center justify-between text-slate-400 text-xs font-sans mb-2">
               <span>ACTIVE ALERTS</span>
               <AlertTriangle className="w-4 h-4 text-amber-400" />
             </div>
-            <div className="text-2xl font-mono font-bold text-amber-300">
+            <div className="text-2xl font-sans font-bold text-amber-300">
               {alerts.length}
             </div>
             <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
@@ -131,12 +131,12 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           </div>
 
           {/* Critical Incidents */}
-          <div className="p-4 rounded-lg bg-[#0d1424] border border-cyan-950/80 relative overflow-hidden">
-            <div className="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+          <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 relative overflow-hidden">
+            <div className="flex items-center justify-between text-slate-400 text-xs font-sans mb-2">
               <span>CRITICAL INCIDENTS</span>
               <ShieldAlert className="w-4 h-4 text-rose-400" />
             </div>
-            <div className="text-2xl font-mono font-bold text-rose-400">
+            <div className="text-2xl font-sans font-bold text-rose-400">
               {incidents.filter((i) => i.severity === 'critical').length}
             </div>
             <div className="text-[11px] text-slate-400 mt-1">
@@ -145,12 +145,12 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           </div>
 
           {/* Active Investigations */}
-          <div className="p-4 rounded-lg bg-[#0d1424] border border-cyan-950/80 relative overflow-hidden">
-            <div className="flex items-center justify-between text-slate-400 text-xs font-mono mb-2">
+          <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 relative overflow-hidden">
+            <div className="flex items-center justify-between text-slate-400 text-xs font-sans mb-2">
               <span>ACTIVE INVESTIGATIONS</span>
               <Cpu className="w-4 h-4 text-purple-400" />
             </div>
-            <div className="text-2xl font-mono font-bold text-purple-300">
+            <div className="text-2xl font-sans font-bold text-purple-300">
               {incidents.length}
             </div>
             <div className="text-[11px] text-slate-400 mt-1">
@@ -161,34 +161,34 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
       </div>
 
       {/* Hero Threat Level & Incident List Grid */}
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-4">
         {/* THREAT LEVEL Hero Card (Col 4) */}
-        <div className="col-span-12 lg:col-span-4 p-6 rounded-xl bg-gradient-to-b from-[#10192e] to-[#0c1220] border border-cyan-900/60 shadow-xl flex flex-col justify-between">
+        <div className="col-span-12 lg:col-span-4 p-4 rounded-lg bg-[#151b23] border border-slate-800 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <span className="font-mono text-xs font-bold tracking-widest text-slate-400 uppercase">
+              <span className="font-sans text-xs font-bold tracking-widest text-slate-400 uppercase">
                 THREAT LEVEL
               </span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-950 text-cyan-300 border border-cyan-800">
+              <span className="px-2 py-0.5 rounded text-[10px] font-sans font-bold bg-cyan-950 text-cyan-300 border border-cyan-800">
                 BACKEND COMPUTED
               </span>
             </div>
 
             {/* Score Display */}
-            <div className="my-6 text-center">
+            <div className="my-4 text-center">
               <div
-                className={`text-6xl font-black font-mono tracking-tighter ${
+                className={`text-4xl font-semibold font-sans tracking-tight ${
                   threatInfo.score >= 75
-                    ? 'text-rose-500 drop-shadow-[0_0_25px_rgba(244,63,94,0.4)]'
+                    ? 'text-rose-500'
                     : threatInfo.score >= 40
-                    ? 'text-amber-400 drop-shadow-[0_0_20px_rgba(251,191,36,0.3)]'
-                    : 'text-cyan-400 drop-shadow-[0_0_20px_rgba(0,229,255,0.3)]'
+                    ? 'text-amber-400'
+                    : 'text-cyan-400'
                 }`}
               >
                 {threatInfo.score}
               </div>
               <div
-                className={`font-mono text-lg font-black tracking-widest uppercase mt-1 ${
+                className={`font-sans text-sm font-semibold uppercase mt-1 ${
                   threatInfo.score >= 75
                     ? 'text-rose-400'
                     : threatInfo.score >= 40
@@ -207,7 +207,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             <div className="space-y-1.5">
               <div className="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden p-0.5 border border-slate-800">
                 <div
-                  className={`h-full rounded-full transition-all duration-500 ${
+                  className={`h-full rounded-full transition-colors duration-500 ${
                     threatInfo.score >= 75
                       ? 'bg-rose-500'
                       : threatInfo.score >= 40
@@ -217,7 +217,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                   style={{ width: `${Math.min(100, Math.max(8, threatInfo.score))}%` }}
                 />
               </div>
-              <div className="flex justify-between font-mono text-[10px] text-slate-500">
+              <div className="flex justify-between font-sans text-[10px] text-slate-500">
                 <span>0 NOMINAL</span>
                 <span>50 ELEVATED</span>
                 <span>100 CRITICAL</span>
@@ -230,7 +230,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             <div className="pt-4 border-t border-slate-800/80 mt-4">
               <button
                 onClick={() => onSelectIncident(incidents[0].id)}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-mono text-xs font-bold transition-all shadow-[0_0_10px_rgba(0,229,255,0.15)]"
+                className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded bg-cyan-600 hover:bg-cyan-500 text-white border border-cyan-500 font-sans text-xs font-semibold transition-colors"
               >
                 <span>OPEN INCIDENT HERO INVESTIGATION</span>
                 <ArrowRight className="w-4 h-4" />
@@ -240,19 +240,19 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
         </div>
 
         {/* INCIDENT LIST (Col 8) */}
-        <div className="col-span-12 lg:col-span-8 p-6 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl flex flex-col justify-between">
+        <div className="col-span-12 lg:col-span-8 p-4 rounded-lg bg-[#151b23] border border-slate-800 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2.5">
                 <ShieldAlert className="w-4 h-4 text-cyan-400" />
-                <span className="font-mono text-xs font-bold tracking-widest text-slate-300 uppercase">
+                <span className="font-sans text-xs font-bold tracking-widest text-slate-300 uppercase">
                   ACTIVE CORRELATED INCIDENTS
                 </span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300">
+                <span className="px-2 py-0.5 rounded text-[10px] font-sans bg-slate-800 text-slate-300">
                   {incidents.length} INCIDENT{incidents.length !== 1 ? 'S' : ''}
                 </span>
               </div>
-              <span className="text-[11px] font-mono text-slate-400">
+              <span className="text-[11px] font-sans text-slate-400">
                 CORRELATION WINDOW: 10M
               </span>
             </div>
@@ -260,7 +260,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             {/* Table */}
             <div className="overflow-x-auto mt-3">
               {incidents.length === 0 ? (
-                <div className="py-12 text-center text-slate-500 font-mono text-xs">
+                <div className="py-12 text-center text-slate-500 font-sans text-xs">
                   <ShieldCheck className="w-8 h-8 text-emerald-500/60 mx-auto mb-2" />
                   <span>No active security incidents detected.</span>
                   <p className="text-[11px] text-slate-600 mt-1 font-sans">
@@ -268,7 +268,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                   </p>
                 </div>
               ) : (
-                <table className="w-full text-left font-mono text-xs">
+                <table className="w-full text-left font-sans text-xs">
                   <thead>
                     <tr className="text-slate-400 border-b border-slate-800 text-[11px]">
                       <th className="py-2.5 px-3">INCIDENT</th>
@@ -328,7 +328,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                             <StatusBadge status={inc.status} />
                           </td>
                           <td className="py-3 px-3 text-right">
-                            <button className="text-cyan-400 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all inline-flex items-center gap-1 text-[11px] font-bold">
+                            <button className="text-cyan-400 group-hover:text-cyan-300 group-hover:translate-x-1 transition-colors inline-flex items-center gap-1 text-[11px] font-bold">
                               <span>INVESTIGATE</span>
                               <ArrowRight className="w-3.5 h-3.5" />
                             </button>
@@ -345,15 +345,15 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
       </div>
 
       {/* LIVE THREAT TIMELINE (As specified in prompt) */}
-      <div className="p-6 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl">
+      <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
           <div>
             <div className="flex items-center gap-2.5">
               <Activity className="w-4 h-4 text-cyan-400" />
-              <h2 className="font-mono text-sm font-bold tracking-widest text-slate-200 uppercase">
+              <h2 className="font-sans text-sm font-bold tracking-widest text-slate-200 uppercase">
                 LIVE THREAT TIMELINE
               </h2>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-800 animate-pulse">
+              <span className="px-2 py-0.5 rounded text-[10px] font-sans bg-emerald-950 text-emerald-300 border border-emerald-800 animate-pulse">
                 ● LIVE INGESTION
               </span>
             </div>
@@ -364,7 +364,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
 
           <div className="flex items-center gap-2">
             {/* Filter buttons */}
-            <div className="flex rounded bg-slate-900 p-0.5 border border-slate-800 font-mono text-[11px]">
+            <div className="flex rounded bg-slate-900 p-0.5 border border-slate-800 font-sans text-[11px]">
               <button
                 onClick={() => setTimelineFilter('all')}
                 className={`px-2.5 py-1 rounded ${timelineFilter === 'all' ? 'bg-cyan-950 text-cyan-300 font-bold' : 'text-slate-400'}`}
@@ -393,7 +393,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 placeholder="Search user, host, IP, cmd..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-slate-900 border border-slate-800 rounded pl-8 pr-3 py-1 text-xs font-mono text-slate-300 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
+                className="bg-slate-900 border border-slate-800 rounded pl-8 pr-3 py-1 text-xs font-sans text-slate-300 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
               />
             </div>
           </div>
@@ -402,7 +402,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
         {/* Events list */}
         <div className="mt-4 space-y-2 max-h-[380px] overflow-y-auto pr-1">
           {filteredTimeline.length === 0 ? (
-            <div className="py-8 text-center text-slate-500 font-mono text-xs">
+            <div className="py-8 text-center text-slate-500 font-sans text-xs">
               No matching events found in current filter.
             </div>
           ) : (
@@ -414,9 +414,9 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 <div
                   key={evt.id}
                   onClick={() => onInspectEvent(evt)}
-                  className={`p-3 rounded-lg border transition-all cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-3 font-mono text-xs ${
+                  className={`p-3 rounded-lg border transition-colors cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-3 font-sans text-xs ${
                     isMalicious
-                      ? 'bg-rose-950/20 border-rose-900/40 hover:border-rose-700/80 shadow-[0_0_8px_rgba(244,63,94,0.1)]'
+                      ? 'bg-rose-950/20 border-rose-900/40 hover:border-rose-700/80'
                       : 'bg-slate-900/60 border-slate-800/80 hover:border-cyan-900/70'
                   }`}
                 >

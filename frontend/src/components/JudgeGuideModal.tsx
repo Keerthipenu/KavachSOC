@@ -18,16 +18,16 @@ export const JudgeGuideModal: React.FC<JudgeGuideModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-150">
-      <div className="relative w-full max-w-4xl bg-[#090e18] border border-cyan-800/80 rounded-xl shadow-2xl shadow-cyan-950/50 overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-4xl bg-[#111820] border border-cyan-800/80 rounded-lg shadow-cyan-950/50 overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-cyan-950 bg-[#0d1627]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-cyan-950 bg-[#151b23]">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
               <Sparkles className="w-5 h-5 text-cyan-400" />
             </div>
             <div>
-              <h2 className="font-mono text-base font-bold tracking-wider text-cyan-300">
-                SENTINEL-X · 20-SECOND JUDGE BRIEFING
+              <h2 className="font-sans text-base font-bold tracking-wider text-cyan-300">
+                KavachSOC · 20-SECOND JUDGE BRIEFING
               </h2>
               <p className="text-xs text-slate-400 font-sans mt-0.5">
                 Agentic AI Security Operations & Autonomous Threat Hunting Platform
@@ -43,7 +43,7 @@ export const JudgeGuideModal: React.FC<JudgeGuideModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto space-y-4 font-mono text-xs">
+        <div className="p-4 overflow-y-auto space-y-4 font-sans text-xs">
           <div className="grid grid-cols-2 gap-4">
             {/* 1. WHAT IS HAPPENING? */}
             <div className="p-4 rounded-lg bg-slate-900/80 border border-slate-800 space-y-2">
@@ -114,7 +114,7 @@ export const JudgeGuideModal: React.FC<JudgeGuideModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 bg-[#0a0f1b] border-t border-slate-800 flex items-center justify-between font-mono text-xs">
+        <div className="px-6 py-4 bg-[#111820] border-t border-slate-800 flex items-center justify-between font-sans text-xs">
           <div className="flex items-center gap-2 text-slate-400">
             <CheckCircle className="w-4 h-4 text-emerald-400" />
             <span>Ready to explore the live SOC dashboard.</span>
@@ -125,7 +125,7 @@ export const JudgeGuideModal: React.FC<JudgeGuideModalProps> = ({
                 onLoadMultiStage();
                 onClose();
               }}
-              className="flex items-center gap-2 px-5 py-2 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(0,229,255,0.3)] transition-all"
+              className="flex items-center gap-2 px-5 py-2 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition-colors"
             >
               <span>RUN MULTI-STAGE DEMO SCENARIO</span>
               <ArrowRight className="w-4 h-4" />

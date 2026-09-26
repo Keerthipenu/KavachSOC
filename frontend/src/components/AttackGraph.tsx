@@ -123,23 +123,23 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
 
   const getNodeColor = (type: string, label: string) => {
     if (type === 'ip' && !label.startsWith('10.')) {
-      return { border: 'border-rose-500', bg: 'bg-rose-950/80', text: 'text-rose-400', glow: 'rgba(244,63,94,0.3)' };
+      return { border: 'border-rose-500', bg: 'bg-rose-950/80', text: 'text-rose-400' };
     }
     if (type === 'process') {
-      return { border: 'border-amber-500', bg: 'bg-amber-950/80', text: 'text-amber-400', glow: 'rgba(245,158,11,0.3)' };
+      return { border: 'border-amber-500', bg: 'bg-amber-950/80', text: 'text-amber-400' };
     }
     if (type === 'account') {
-      return { border: 'border-purple-500', bg: 'bg-purple-950/80', text: 'text-purple-400', glow: 'rgba(168,85,247,0.3)' };
+      return { border: 'border-slate-600', bg: 'bg-slate-800/80', text: 'text-slate-300' };
     }
     if (label.toLowerCase().includes('server')) {
-      return { border: 'border-rose-600', bg: 'bg-rose-950/90', text: 'text-rose-300', glow: 'rgba(225,29,72,0.4)' };
+      return { border: 'border-rose-600', bg: 'bg-rose-950/90', text: 'text-rose-300' };
     }
-    return { border: 'border-cyan-500', bg: 'bg-cyan-950/80', text: 'text-cyan-400', glow: 'rgba(0,229,255,0.3)' };
+    return { border: 'border-cyan-500', bg: 'bg-cyan-950/80', text: 'text-cyan-400' };
   };
 
   if (!graphData || !graphData.nodes || graphData.nodes.length === 0) {
     return (
-      <div className={`w-full ${height} bg-[#080d17] border border-slate-800 rounded-lg flex flex-col items-center justify-center text-slate-500 font-mono text-xs`}>
+      <div className={`w-full ${height} bg-[#111820] border border-slate-800 rounded-lg flex flex-col items-center justify-center text-slate-500 font-sans text-xs`}>
         <Network className="w-8 h-8 text-slate-600 mb-2 animate-pulse" />
         <span>No attack graph available. Ingest a threat scenario to reconstruct entity topology.</span>
       </div>
@@ -147,9 +147,9 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
   }
 
   return (
-    <div className={`relative w-full ${height} bg-[#070b14] border border-cyan-950/70 rounded-lg overflow-hidden flex flex-col select-none`}>
+    <div className={`relative w-full ${height} bg-[#0d1117] border border-slate-800 rounded-lg overflow-hidden flex flex-col select-none`}>
       {/* Controls Overlay */}
-      <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-[#0d1525]/90 backdrop-blur-sm p-1.5 rounded-lg border border-slate-800 font-mono text-xs">
+      <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 bg-[#151b23]/90 backdrop-blur-sm p-1.5 rounded-lg border border-slate-800 font-sans text-xs">
         <button
           onClick={() => setZoom((z) => Math.min(2, z + 0.15))}
           title="Zoom In"
@@ -178,12 +178,12 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
       </div>
 
       {/* Legend */}
-      <div className="absolute top-3 right-3 z-20 hidden md:flex items-center gap-3 bg-[#0d1525]/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-slate-800 font-mono text-[10px] text-slate-400">
+      <div className="absolute top-3 right-3 z-20 hidden md:flex items-center gap-3 bg-[#151b23]/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-slate-800 font-sans text-[10px] text-slate-400">
         <span className="flex items-center gap-1">
           <span className="w-2 h-2 rounded-full bg-rose-500" /> Attacker / Target
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-purple-500" /> User
+          <span className="w-2 h-2 rounded-full bg-slate-500" /> User
         </span>
         <span className="flex items-center gap-1">
           <span className="w-2 h-2 rounded-full bg-cyan-400" /> Endpoint
@@ -216,7 +216,7 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
               markerHeight="6"
               orient="auto-start-reverse"
             >
-              <path d="M 0 1 L 9 5 L 0 9 z" fill="#00e5ff" opacity="0.8" />
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#4f7fb8" opacity="0.8" />
             </marker>
             <marker
               id="arrow-red"
@@ -227,7 +227,7 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
               markerHeight="6"
               orient="auto-start-reverse"
             >
-              <path d="M 0 1 L 9 5 L 0 9 z" fill="#ff3366" opacity="0.9" />
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#b74343" opacity="0.9" />
             </marker>
           </defs>
 
@@ -254,13 +254,13 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
                 <g key={`edge-${idx}`}>
                   <path
                     d={`M ${srcNode.pos.x} ${srcNode.pos.y} Q ${midX} ${midY + 25} ${tgtNode.pos.x} ${tgtNode.pos.y}`}
-                    stroke={isSuspicious ? '#ff3366' : '#00e5ff'}
+                    stroke={isSuspicious ? '#b74343' : '#4f7fb8'}
                     strokeWidth="1.8"
                     strokeDasharray={isSuspicious ? '4,4' : 'none'}
                     strokeOpacity="0.75"
                     fill="none"
                     markerEnd={isSuspicious ? 'url(#arrow-red)' : 'url(#arrow-cyan)'}
-                    className="hover:stroke-cyan-300 hover:stroke-width-3 transition-all cursor-pointer"
+                    className="hover:stroke-cyan-300 hover:stroke-width-3 transition-colors cursor-pointer"
                   />
                   {/* Edge label */}
                   <text
@@ -293,14 +293,13 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
                     setSelectedNode(node);
                   }}
                 >
-                  {/* Outer glow ring for selected / critical nodes */}
+                  {/* Selection ring */}
                   {isSelected && (
                     <circle
                       r="26"
                       fill="none"
-                      stroke="#00e5ff"
+                      stroke="#4f7fb8"
                       strokeWidth="2"
-                      className="animate-ping"
                       opacity="0.6"
                     />
                   )}
@@ -308,13 +307,10 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
                   {/* Main Circle */}
                   <circle
                     r="20"
-                    fill="#0a101d"
-                    stroke={isSelected ? '#00e5ff' : colors.text.replace('text-', '') === 'rose-400' ? '#ff3366' : '#223859'}
+                    fill="#111820"
+                    stroke={isSelected ? '#4f7fb8' : colors.text.replace('text-', '') === 'rose-400' ? '#b74343' : '#37414d'}
                     strokeWidth={isSelected ? '2.5' : '1.5'}
-                    className="transition-all duration-200 group-hover:scale-110"
-                    style={{
-                      filter: `drop-shadow(0 0 6px ${colors.glow})`,
-                    }}
+                    className="transition-colors duration-200 group-hover:scale-105"
                   />
 
                   {/* Icon wrapper */}
@@ -327,7 +323,7 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
                   {/* Node Label Below */}
                   <text
                     y="34"
-                    fill={isSelected ? '#00e5ff' : '#cbd5e1'}
+                    fill={isSelected ? '#4f7fb8' : '#cbd5e1'}
                     fontSize="10"
                     fontWeight={isSelected ? '700' : '500'}
                     fontFamily="monospace"
@@ -355,7 +351,7 @@ export const AttackGraph: React.FC<AttackGraphProps> = ({
 
       {/* Node Inspector Side Panel */}
       {selectedNode && (
-        <div className="absolute top-0 right-0 w-80 h-full bg-[#0b1222]/95 backdrop-blur-md border-l border-cyan-900/60 p-4 overflow-y-auto z-30 font-mono text-xs shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-200">
+        <div className="absolute top-0 right-0 w-80 h-full bg-[#151b23]/95 backdrop-blur-md border-l border-slate-700/80 p-4 overflow-y-auto z-30 font-sans text-xs flex flex-col justify-between animate-in slide-in-from-right duration-200">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
               <div className="flex items-center gap-2 text-cyan-300 font-bold">

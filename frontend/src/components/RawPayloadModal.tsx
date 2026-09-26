@@ -28,19 +28,19 @@ export const RawPayloadModal: React.FC<RawPayloadModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-      <div className="relative w-full max-w-3xl bg-[#0b111e] border border-cyan-900/60 rounded-lg shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+      <div className="relative w-full max-w-3xl bg-[#151b23] border border-slate-700/80 rounded-lg overflow-hidden flex flex-col max-h-[85vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-[#0e1626]">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-[#151b23]">
           <div className="flex items-center gap-2.5">
             <Terminal className="w-4 h-4 text-cyan-400" />
-            <span className="font-mono text-sm font-semibold tracking-wide text-cyan-200">
+            <span className="font-sans text-sm font-semibold tracking-wide text-cyan-200">
               {title}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono text-slate-300 hover:text-cyan-300 bg-slate-800/80 hover:bg-slate-700/80 rounded border border-slate-700 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-sans text-slate-300 hover:text-cyan-300 bg-slate-800/80 hover:bg-slate-700/80 rounded border border-slate-700 transition-colors"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'COPIED' : 'COPY RAW'}</span>
@@ -55,17 +55,17 @@ export const RawPayloadModal: React.FC<RawPayloadModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-4 overflow-y-auto font-mono text-xs text-slate-300 bg-[#070b14] leading-relaxed">
+        <div className="p-4 overflow-y-auto font-sans text-xs text-slate-300 bg-[#0d1117] leading-relaxed">
           <pre className="whitespace-pre-wrap selection:bg-cyan-950 selection:text-cyan-200">
             {jsonString}
           </pre>
         </div>
 
         {/* Footer info */}
-        <div className="px-5 py-2.5 bg-[#090f1a] border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+        <div className="px-5 py-2.5 bg-[#111820] border-t border-slate-800/80 flex items-center justify-between text-[11px] font-sans text-slate-400">
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-3.5 h-3.5 text-cyan-400" />
-            <span>SENTINEL-X DETERMINISTIC AUDIT STREAM</span>
+            <span>KavachSOC DETERMINISTIC AUDIT STREAM</span>
           </div>
           <span>READ-ONLY FORENSIC ARTIFACT</span>
         </div>

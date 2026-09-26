@@ -103,23 +103,23 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-5xl bg-[#090e18] border border-cyan-800/60 rounded-xl shadow-2xl shadow-cyan-950/40 overflow-hidden flex flex-col h-[85vh]">
+      <div className="relative w-full max-w-5xl bg-[#111820] border border-cyan-800/60 rounded-lg shadow-cyan-950/40 overflow-hidden flex flex-col h-[85vh]">
         {/* Header Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-cyan-950 bg-[#0d1524]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-cyan-950 bg-[#151b23]">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
               <Zap className="w-5 h-5 text-cyan-400 animate-pulse" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-mono text-base font-bold tracking-wider text-cyan-300">
+                <h3 className="font-sans text-base font-bold tracking-wider text-cyan-300">
                   ATTACK REPLAY ENGINE
                 </h3>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-950/80 text-cyan-300 border border-cyan-800">
+                <span className="px-2 py-0.5 rounded text-[10px] font-sans font-bold bg-cyan-950/80 text-cyan-300 border border-cyan-800">
                   REAL-TIME TELEMETRY RECONSTRUCTION
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-mono mt-0.5">
+              <p className="text-xs text-slate-400 font-sans mt-0.5">
                 Scenario: <span className="text-cyan-200 uppercase font-semibold">{scenario.replace('_', ' ')}</span> · Chronological SSE Ingestion
               </p>
             </div>
@@ -127,7 +127,7 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
 
           <div className="flex items-center gap-3">
             {/* Speed selection */}
-            <div className="flex items-center gap-1.5 text-xs font-mono text-slate-400 bg-slate-900/90 px-3 py-1.5 rounded border border-slate-800">
+            <div className="flex items-center gap-1.5 text-xs font-sans text-slate-400 bg-slate-900/90 px-3 py-1.5 rounded border border-slate-800">
               <span>SPEED:</span>
               {[500, 300, 150].map((d) => (
                 <button
@@ -142,7 +142,7 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
 
             <button
               onClick={startReplay}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono bg-cyan-950/60 hover:bg-cyan-900/60 text-cyan-300 border border-cyan-800/80 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-sans bg-cyan-950/60 hover:bg-cyan-900/60 text-cyan-300 border border-cyan-800/80 transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>RESTART</span>
@@ -158,7 +158,7 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
         </div>
 
         {/* Dynamic Threat & Progression Ribbon */}
-        <div className="grid grid-cols-12 gap-3 px-6 py-3 bg-[#0c1220] border-b border-slate-800/80 font-mono text-xs">
+        <div className="grid grid-cols-12 gap-3 px-6 py-3 bg-[#151b23] border-b border-slate-800/80 font-sans text-xs">
           {/* Threat score gauge */}
           <div className="col-span-3 flex items-center gap-3 bg-slate-900/70 p-2.5 rounded border border-slate-800">
             <div className="text-right">
@@ -170,7 +170,7 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
             <div className="flex-1">
               <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
                 <div 
-                  className={`h-full transition-all duration-300 ${threatScore > 75 ? 'bg-rose-500' : threatScore > 40 ? 'bg-amber-400' : 'bg-cyan-400'}`}
+                  className={`h-full transition-colors duration-300 ${threatScore > 75 ? 'bg-rose-500' : threatScore > 40 ? 'bg-amber-400' : 'bg-cyan-400'}`}
                   style={{ width: `${threatScore}%` }}
                 />
               </div>
@@ -218,15 +218,15 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
         </div>
 
         {/* Main Body: Event Reconstruction List */}
-        <div className="flex-1 p-6 overflow-hidden flex flex-col bg-[#070b14]">
-          <div className="flex items-center justify-between mb-3 text-xs font-mono text-slate-400">
+        <div className="flex-1 p-4 overflow-hidden flex flex-col bg-[#0d1117]">
+          <div className="flex items-center justify-between mb-3 text-xs font-sans text-slate-400">
             <span>CHRONOLOGICAL TELEMETRY FEED (APPEARING IN REAL TIME)</span>
             <span>AUTO-SCROLLING ● LIVE</span>
           </div>
 
           <div 
             ref={scrollRef}
-            className="flex-1 overflow-y-auto space-y-2 pr-2 font-mono text-xs"
+            className="flex-1 overflow-y-auto space-y-2 pr-2 font-sans text-xs"
           >
             {events.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-500 space-y-2">
@@ -239,9 +239,9 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
                 return (
                   <div
                     key={evt.id + '-' + idx}
-                    className={`p-3.5 rounded-lg border transition-all duration-200 ${
+                    className={`p-3.5 rounded-lg border transition-colors duration-200 ${
                       isLatest
-                        ? 'bg-cyan-950/30 border-cyan-500/80 shadow-[0_0_15px_rgba(0,229,255,0.15)] ring-1 ring-cyan-500/50'
+                        ? 'bg-cyan-950/30 border-cyan-500/80 ring-1 ring-cyan-500/50'
                         : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
                     }`}
                   >
@@ -295,7 +295,7 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 bg-[#0d1524] border-t border-slate-800 flex items-center justify-between font-mono text-xs">
+        <div className="px-6 py-3 bg-[#151b23] border-t border-slate-800 flex items-center justify-between font-sans text-xs">
           <div className="flex items-center gap-2 text-slate-400">
             <Terminal className="w-4 h-4 text-cyan-400" />
             <span>AI correlation pipeline will ingest, correlate, and graph these events.</span>
@@ -303,7 +303,7 @@ export const AttackReplayModal: React.FC<AttackReplayModalProps> = ({
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="px-5 py-2 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(0,229,255,0.3)] transition-all"
+              className="px-5 py-2 rounded bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition-colors"
             >
               CLOSE & VIEW ON DASHBOARD
             </button>

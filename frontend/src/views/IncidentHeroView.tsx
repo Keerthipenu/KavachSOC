@@ -103,7 +103,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
 
   if (!incident) {
     return (
-      <div className="py-20 text-center font-mono text-xs text-slate-500">
+      <div className="py-20 text-center font-sans text-xs text-slate-500">
         <ShieldAlert className="w-10 h-10 text-slate-600 mx-auto mb-3" />
         <span className="text-sm font-bold text-slate-400 block mb-1">NO INCIDENT SELECTED</span>
         <p className="text-slate-600 font-sans max-w-md mx-auto">
@@ -117,18 +117,18 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
   const verification = incident.verification;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Incident Switcher & Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0d1424] p-4 rounded-xl border border-cyan-950/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#151b23] p-4 rounded-lg border border-slate-800">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded bg-rose-500/10 border border-rose-500/30">
             <ShieldAlert className="w-5 h-5 text-rose-400" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-cyan-400">{incident.id}</span>
-              <span className="text-slate-600 font-mono">·</span>
-              <h1 className="text-base font-bold text-slate-100 font-mono">
+              <span className="font-sans text-xs font-bold text-cyan-400">{incident.id}</span>
+              <span className="text-slate-600 font-sans">·</span>
+              <h1 className="text-base font-bold text-slate-100 font-sans">
                 {incident.title}
               </h1>
               <StatusBadge severity={incident.severity} />
@@ -142,7 +142,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
 
         {/* Incident selector if multiple */}
         {allIncidents.length > 1 && (
-          <div className="flex items-center gap-2 font-mono text-xs">
+          <div className="flex items-center gap-2 font-sans text-xs">
             <span className="text-slate-400">SWITCH INCIDENT:</span>
             <select
               value={incident.id}
@@ -160,10 +160,10 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
       </div>
 
       {/* Main Hero 3-Column Grid */}
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-4">
         {/* LEFT: Incident Summary (Col 3) */}
         <div className="col-span-12 lg:col-span-3 space-y-4">
-          <div className="p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl space-y-4 font-mono text-xs">
+          <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-4 font-sans text-xs">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <span className="font-bold text-slate-300 tracking-wider uppercase text-[11px]">
                 INCIDENT SUMMARY
@@ -181,7 +181,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
               </div>
               <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
                 <div
-                  className="bg-cyan-400 h-full transition-all duration-500"
+                  className="bg-cyan-400 h-full transition-colors duration-500"
                   style={{ width: `${incident.confidence * 100}%` }}
                 />
               </div>
@@ -242,7 +242,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
 
             {/* Post-Response Verification Card (if contained) */}
             {isContained && (
-              <div className="p-3.5 rounded-lg bg-emerald-950/30 border border-emerald-800/60 shadow-[0_0_12px_rgba(16,185,129,0.15)] animate-in fade-in">
+              <div className="p-3.5 rounded-lg bg-emerald-950/30 border border-emerald-800/60 animate-in fade-in">
                 <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs mb-1.5">
                   <ShieldCheck className="w-4 h-4" />
                   <span>CONTAINMENT VERIFIED</span>
@@ -267,7 +267,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
         </div>
 
         {/* CENTER: Attack Timeline (Col 5) */}
-        <div className="col-span-12 lg:col-span-5 p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl flex flex-col font-mono text-xs">
+        <div className="col-span-12 lg:col-span-5 p-4 rounded-lg bg-[#151b23] border border-slate-800 flex flex-col font-sans text-xs">
           <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
             <div className="flex items-center gap-2">
               <Activity className="w-4 h-4 text-cyan-400" />
@@ -290,7 +290,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
                 <div
                   key={evt.id}
                   onClick={() => onInspectEvent(evt)}
-                  className={`p-3 rounded-lg border transition-all cursor-pointer relative group ${
+                  className={`p-3 rounded-lg border transition-colors cursor-pointer relative group ${
                     isHighlighted
                       ? 'ring-2 ring-cyan-400 bg-cyan-950/40 border-cyan-400'
                       : isMalicious
@@ -348,9 +348,9 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
         {/* RIGHT: AI Security Analyst Panel & Response Panel (Col 4) */}
         <div className="col-span-12 lg:col-span-4 space-y-4">
           {/* AI Security Analyst Panel */}
-          <div className="p-5 rounded-xl bg-gradient-to-b from-[#121b30] to-[#0c1324] border border-purple-900/50 shadow-xl space-y-4 font-mono text-xs">
+          <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-4 font-sans text-xs">
             {/* Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-purple-900/40">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <span className="text-base">🤖</span>
                 <span className="font-bold text-purple-300 tracking-wider uppercase text-xs">
@@ -418,7 +418,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
                 setHighlightedEvidence(chain);
                 setTimeout(() => setHighlightedEvidence([]), 5000);
               }}
-              className="w-full py-2 px-3 rounded bg-purple-950/60 hover:bg-purple-900/60 text-purple-200 border border-purple-700/60 font-bold transition-all text-xs flex items-center justify-center gap-2"
+              className="w-full py-2 px-3 rounded bg-purple-950/60 hover:bg-purple-900/60 text-purple-200 border border-purple-700/60 font-bold transition-colors text-xs flex items-center justify-center gap-2"
             >
               <Eye className="w-3.5 h-3.5" />
               <span>[ VIEW EVIDENCE CHAIN ({incident.event_ids.length}) ]</span>
@@ -430,7 +430,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
           </div>
 
           {/* RESPONSE PANEL (Prompt specified layout) */}
-          <div className="p-5 rounded-xl bg-[#0d1424] border border-amber-900/50 shadow-xl space-y-4 font-mono text-xs">
+          <div className="p-4 rounded-lg bg-[#151b23] border border-amber-900/50 space-y-4 font-sans text-xs">
             <div className="flex items-center justify-between pb-3 border-b border-amber-900/40">
               <div className="flex items-center gap-2 text-amber-300 font-bold uppercase text-[11px]">
                 <Zap className="w-4 h-4 text-amber-400" />
@@ -462,7 +462,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
                     <button
                       onClick={() => setModalAction(activeAction)}
                       disabled={isProcessingAction}
-                      className="py-2.5 px-3 rounded font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.3)] transition-all flex items-center justify-center gap-1.5 text-xs"
+                      className="py-2.5 px-3 rounded font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 transition-colors flex items-center justify-center gap-1.5 text-xs"
                     >
                       <Check className="w-4 h-4" />
                       <span>[ APPROVE ]</span>
@@ -494,7 +494,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
                   <button
                     onClick={() => handleRollbackClick(activeAction.id)}
                     disabled={isProcessingAction}
-                    className="w-full py-2 px-4 rounded bg-rose-950/60 hover:bg-rose-900/60 text-rose-300 border border-rose-800 font-bold transition-all text-xs flex items-center justify-center gap-2"
+                    className="w-full py-2 px-4 rounded bg-rose-950/60 hover:bg-rose-900/60 text-rose-300 border border-rose-800 font-bold transition-colors text-xs flex items-center justify-center gap-2"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>[ ROLLBACK CONTAINMENT ]</span>
@@ -502,7 +502,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
                 </div>
               )
             ) : (
-              <div className="py-4 text-center text-slate-500 font-mono text-xs">
+              <div className="py-4 text-center text-slate-500 font-sans text-xs">
                 No containment action required for this activity.
               </div>
             )}
@@ -513,7 +513,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
       {/* BOTTOM: Attack Graph & "WHY THIS ALERT?" Section */}
       <div className="space-y-4">
         {/* Attack Graph */}
-        <div className="p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl space-y-3 font-mono text-xs">
+        <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-3 font-sans text-xs">
           <div className="flex items-center justify-between pb-2 border-b border-slate-800">
             <div className="flex items-center gap-2 text-cyan-300 font-bold uppercase text-xs">
               <Server className="w-4 h-4 text-cyan-400" />
@@ -534,14 +534,14 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
         </div>
 
         {/* WHY THIS ALERT? Expandable Evidence Panel */}
-        <div className="p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl font-mono text-xs">
+        <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 font-sans text-xs">
           <button
             onClick={() => setWhyAlertExpanded(!whyAlertExpanded)}
             className="w-full flex items-center justify-between text-left text-cyan-300 hover:text-cyan-200 transition-colors"
           >
             <div className="flex items-center gap-2 font-bold uppercase tracking-wider text-xs">
               <HelpCircle className="w-4 h-4 text-cyan-400" />
-              <span>WHY DID SENTINEL-X FLAG THIS? (EXPLAINABILITY & EVIDENCE CHAIN)</span>
+              <span>WHY DID KavachSOC FLAG THIS? (EXPLAINABILITY & EVIDENCE CHAIN)</span>
             </div>
             {whyAlertExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
           </button>
@@ -557,11 +557,11 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
                   <ul className="space-y-1.5 text-xs text-slate-300 font-sans">
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                      <span>Rule <code className="text-cyan-300 font-mono">R-AUTH-001</code> triggered (repeated failed authentication)</span>
+                      <span>Rule <code className="text-cyan-300 font-sans">R-AUTH-001</code> triggered (repeated failed authentication)</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                      <span>Isolation Forest anomaly score: <strong className="text-purple-300 font-mono">0.92</strong></span>
+                      <span>Isolation Forest anomaly score: <strong className="text-purple-300 font-sans">0.92</strong></span>
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
@@ -569,11 +569,11 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                      <span>New destination host connection to internal <code className="text-amber-300 font-mono">10.0.0.50:445</code></span>
+                      <span>New destination host connection to internal <code className="text-amber-300 font-sans">10.0.0.50:445</code></span>
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                      <span>Suspicious process execution: <code className="text-rose-300 font-mono">powershell.exe -EncodedCommand</code></span>
+                      <span>Suspicious process execution: <code className="text-rose-300 font-sans">powershell.exe -EncodedCommand</code></span>
                     </li>
                   </ul>
                 </div>
@@ -591,7 +591,7 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
                           const evt = timelineEvents.find((e) => e.id === eid);
                           if (evt) onInspectEvent(evt);
                         }}
-                        className="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 text-cyan-300 text-xs font-mono flex items-center gap-1.5 transition-colors"
+                        className="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 text-cyan-300 text-xs font-sans flex items-center gap-1.5 transition-colors"
                       >
                         <span>{eid}</span>
                         <ExternalLink className="w-3 h-3" />

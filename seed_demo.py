@@ -7,7 +7,7 @@ def main():
     with SessionLocal() as db:
         reset_demo(db)
         result = load_scenario(db, "multi_stage")
-        print(f"Seeded SENTINEL-X demo: {result}")
+        print(f"Seeded KavachSOC demo: {result}")
 
 
 if __name__ == "__main__":

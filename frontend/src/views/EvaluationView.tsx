@@ -31,7 +31,7 @@ export const EvaluationView: React.FC = () => {
 
   if (loading && !data) {
     return (
-      <div className="py-24 text-center font-mono text-xs text-slate-500">
+      <div className="py-24 text-center font-sans text-xs text-slate-500">
         <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
         <span>Computing real-time evaluation across 6 deterministic benchmark scenarios...</span>
       </div>
@@ -40,7 +40,7 @@ export const EvaluationView: React.FC = () => {
 
   if (error || !data) {
     return (
-      <div className="p-8 rounded-xl bg-rose-950/20 border border-rose-900/50 text-center font-mono text-xs text-rose-300">
+      <div className="p-8 rounded-lg bg-rose-950/20 border border-rose-900/50 text-center font-sans text-xs text-rose-300">
         <span className="font-bold block mb-1">EVALUATION FAILED</span>
         <span>{error || 'No evaluation data returned from backend.'}</span>
         <div className="mt-4">
@@ -61,23 +61,23 @@ export const EvaluationView: React.FC = () => {
   const recallDelta = Math.round((sx.recall - baseline.recall) * 100);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-mono font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
+          <h1 className="text-xl font-sans font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
             <FileCheck className="w-5 h-5 text-cyan-400" />
             <span>MODEL EVALUATION & OBSERVABILITY BENCHMARK</span>
           </h1>
           <p className="text-xs text-slate-400 font-sans mt-0.5">
-            Deterministic cross-scenario evaluation comparing explicit Rule Baseline against SENTINEL-X Hybrid (Rule + Isolation Forest)
+            Deterministic cross-scenario evaluation comparing explicit Rule Baseline against KavachSOC Hybrid (Rule + Isolation Forest)
           </p>
         </div>
 
         <button
           onClick={fetchEval}
           disabled={loading}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-slate-300 hover:text-cyan-300 bg-slate-900/80 hover:bg-slate-800 rounded border border-slate-700 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans text-slate-300 hover:text-cyan-300 bg-slate-900/80 hover:bg-slate-800 rounded border border-slate-700 transition-colors"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           <span>RECALCULATE</span>
@@ -85,7 +85,7 @@ export const EvaluationView: React.FC = () => {
       </div>
 
       {/* Dataset & Methodology Banner */}
-      <div className="p-4 rounded-xl bg-[#0d1424] border border-cyan-950/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 font-mono text-xs">
+      <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 font-sans text-xs">
         <div className="flex items-center gap-3">
           <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0" />
           <div>
@@ -101,9 +101,9 @@ export const EvaluationView: React.FC = () => {
       </div>
 
       {/* Top 5 Metric Highlights Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 font-mono">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 font-sans">
         {/* F1 Score */}
-        <div className="p-4 rounded-xl bg-[#0b1220] border border-cyan-950/80 shadow-lg space-y-1">
+        <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-1">
           <span className="text-[10px] text-slate-400 uppercase block">F1 SCORE</span>
           <div className="text-2xl font-bold text-cyan-300">
             {(sx.f1 * 100).toFixed(1)}%
@@ -115,7 +115,7 @@ export const EvaluationView: React.FC = () => {
         </div>
 
         {/* Recall */}
-        <div className="p-4 rounded-xl bg-[#0b1220] border border-cyan-950/80 shadow-lg space-y-1">
+        <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-1">
           <span className="text-[10px] text-slate-400 uppercase block">RECALL (DETECTION RATE)</span>
           <div className="text-2xl font-bold text-purple-300">
             {(sx.recall * 100).toFixed(1)}%
@@ -127,7 +127,7 @@ export const EvaluationView: React.FC = () => {
         </div>
 
         {/* Precision */}
-        <div className="p-4 rounded-xl bg-[#0b1220] border border-cyan-950/80 shadow-lg space-y-1">
+        <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-1">
           <span className="text-[10px] text-slate-400 uppercase block">PRECISION</span>
           <div className="text-2xl font-bold text-slate-100">
             {(sx.precision * 100).toFixed(1)}%
@@ -138,7 +138,7 @@ export const EvaluationView: React.FC = () => {
         </div>
 
         {/* False Positive Rate */}
-        <div className="p-4 rounded-xl bg-[#0b1220] border border-cyan-950/80 shadow-lg space-y-1">
+        <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-1">
           <span className="text-[10px] text-slate-400 uppercase block">FALSE POSITIVE RATE</span>
           <div className="text-2xl font-bold text-amber-300">
             {(sx.false_positive_rate * 100).toFixed(1)}%
@@ -149,7 +149,7 @@ export const EvaluationView: React.FC = () => {
         </div>
 
         {/* Detection Latency */}
-        <div className="p-4 rounded-xl bg-[#0b1220] border border-cyan-950/80 shadow-lg space-y-1">
+        <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-1">
           <span className="text-[10px] text-slate-400 uppercase block">DETECTION LATENCY</span>
           <div className="text-2xl font-bold text-emerald-300">
             {sx.mean_detection_latency_seconds !== null ? `${sx.mean_detection_latency_seconds}s` : '0.0s'}
@@ -161,20 +161,20 @@ export const EvaluationView: React.FC = () => {
         </div>
       </div>
 
-      {/* Comparison: RULE BASELINE vs SENTINEL-X HYBRID */}
-      <div className="p-6 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl space-y-6">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800 font-mono text-xs">
+      {/* Comparison: RULE BASELINE vs KavachSOC HYBRID */}
+      <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-800 font-sans text-xs">
           <span className="font-bold text-slate-200 uppercase tracking-wider text-sm">
-            COMPARISON: RULE BASELINE vs SENTINEL-X HYBRID
+            COMPARISON: RULE BASELINE vs KavachSOC HYBRID
           </span>
           <span className="text-cyan-400 text-[11px]">
             REAL COMPUTED METRICS FROM DATASET
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Rule Baseline Box */}
-          <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-4 font-mono text-xs">
+          <div className="p-4 rounded-lg bg-slate-900/60 border border-slate-800 space-y-4 font-sans text-xs">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <span className="font-bold text-slate-300">RULE BASELINE</span>
               <span className="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-slate-400 font-bold">
@@ -238,10 +238,10 @@ export const EvaluationView: React.FC = () => {
             </div>
           </div>
 
-          {/* SENTINEL-X HYBRID Box */}
-          <div className="p-5 rounded-xl bg-cyan-950/20 border border-cyan-700/60 shadow-[0_0_15px_rgba(0,229,255,0.1)] space-y-4 font-mono text-xs">
-            <div className="flex items-center justify-between pb-2 border-b border-cyan-900/60">
-              <span className="font-bold text-cyan-300">SENTINEL-X HYBRID</span>
+          {/* KavachSOC HYBRID Box */}
+          <div className="p-4 rounded-lg bg-cyan-950/20 border border-cyan-700/60 space-y-4 font-sans text-xs">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-700/80">
+              <span className="font-bold text-cyan-300">KavachSOC HYBRID</span>
               <span className="px-2 py-0.5 rounded text-[10px] bg-cyan-950 text-cyan-300 border border-cyan-800 font-bold">
                 RULES + ISOLATION FOREST
               </span>
@@ -280,22 +280,22 @@ export const EvaluationView: React.FC = () => {
             </div>
 
             {/* Confusion matrix */}
-            <div className="pt-3 border-t border-cyan-900/60 text-[11px]">
+            <div className="pt-3 border-t border-slate-700/80 text-[11px]">
               <span className="text-slate-400 uppercase block mb-1.5 font-bold">CONFUSION MATRIX</span>
               <div className="grid grid-cols-2 gap-2 text-center">
-                <div className="p-2 bg-slate-950 rounded border border-cyan-900/60">
+                <div className="p-2 bg-slate-950 rounded border border-slate-700/80">
                   <span className="text-slate-400 block text-[10px]">TRUE POSITIVES</span>
                   <span className="text-sm font-bold text-emerald-400">{sx.true_positives}</span>
                 </div>
-                <div className="p-2 bg-slate-950 rounded border border-cyan-900/60">
+                <div className="p-2 bg-slate-950 rounded border border-slate-700/80">
                   <span className="text-slate-400 block text-[10px]">FALSE POSITIVES</span>
                   <span className="text-sm font-bold text-amber-400">{sx.false_positives}</span>
                 </div>
-                <div className="p-2 bg-slate-950 rounded border border-cyan-900/60">
+                <div className="p-2 bg-slate-950 rounded border border-slate-700/80">
                   <span className="text-slate-400 block text-[10px]">FALSE NEGATIVES</span>
                   <span className="text-sm font-bold text-rose-400">{sx.false_negatives}</span>
                 </div>
-                <div className="p-2 bg-slate-950 rounded border border-cyan-900/60">
+                <div className="p-2 bg-slate-950 rounded border border-slate-700/80">
                   <span className="text-slate-400 block text-[10px]">TRUE NEGATIVES</span>
                   <span className="text-sm font-bold text-cyan-400">{sx.true_negatives}</span>
                 </div>
@@ -306,7 +306,7 @@ export const EvaluationView: React.FC = () => {
       </div>
 
       {/* Per Scenario Coverage Table */}
-      <div className="p-6 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl space-y-4 font-mono text-xs">
+      <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-4 font-sans text-xs">
         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
           <span className="font-bold text-slate-200 uppercase tracking-wider text-sm">
             BENCHMARK BREAKDOWN PER SCENARIO
@@ -323,7 +323,7 @@ export const EvaluationView: React.FC = () => {
                 <th className="py-2.5 px-3">SCENARIO NAME</th>
                 <th className="py-2.5 px-3 text-center">LABELLED MALICIOUS</th>
                 <th className="py-2.5 px-3 text-center">BASELINE FLAGGED</th>
-                <th className="py-2.5 px-3 text-center">SENTINEL-X FLAGGED</th>
+                <th className="py-2.5 px-3 text-center">KavachSOC FLAGGED</th>
                 <th className="py-2.5 px-3 text-right">HYBRID RECALL</th>
               </tr>
             </thead>

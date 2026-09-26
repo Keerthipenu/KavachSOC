@@ -65,11 +65,11 @@ export const AuditView: React.FC<AuditViewProps> = ({
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-mono font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
+          <h1 className="text-xl font-sans font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
             <Terminal className="w-5 h-5 text-cyan-400" />
             <span>IMMUTABLE AUDIT TRAIL & GOVERNANCE LOG</span>
           </h1>
@@ -80,7 +80,7 @@ export const AuditView: React.FC<AuditViewProps> = ({
 
         <button
           onClick={onRefresh}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-slate-300 hover:text-cyan-300 bg-slate-900/80 hover:bg-slate-800 rounded border border-slate-700 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-sans text-slate-300 hover:text-cyan-300 bg-slate-900/80 hover:bg-slate-800 rounded border border-slate-700 transition-colors"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>REFRESH LOGS</span>
@@ -88,7 +88,7 @@ export const AuditView: React.FC<AuditViewProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-xl bg-[#0b1220] border border-cyan-950/70 flex flex-col md:flex-row items-center justify-between gap-3 font-mono text-xs">
+      <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-3 font-sans text-xs">
         <div className="flex items-center gap-2 w-full md:w-auto">
           <span className="text-slate-400 text-[11px]">ACTOR FILTER:</span>
           <div className="flex rounded bg-slate-900 p-0.5 border border-slate-800">
@@ -120,20 +120,20 @@ export const AuditView: React.FC<AuditViewProps> = ({
             placeholder="Search action or target..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-900 border border-slate-800 rounded pl-9 pr-3 py-1.5 text-xs font-mono text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
+            className="w-full bg-slate-900 border border-slate-800 rounded pl-9 pr-3 py-1.5 text-xs font-sans text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500"
           />
         </div>
       </div>
 
       {/* Audit Log Chronological List */}
-      <div className="p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl space-y-3 font-mono text-xs">
+      <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-3 font-sans text-xs">
         <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-[11px] text-slate-400 font-bold">
           <span>EVENT CHRONOLOGY</span>
           <span>RESULT / METADATA</span>
         </div>
 
         {filteredLogs.length === 0 ? (
-          <div className="py-12 text-center text-slate-500 font-mono text-xs">
+          <div className="py-12 text-center text-slate-500 font-sans text-xs">
             No audit records found matching criteria.
           </div>
         ) : (
@@ -145,7 +145,7 @@ export const AuditView: React.FC<AuditViewProps> = ({
               return (
                 <div
                   key={log.id}
-                  className="p-3.5 rounded-lg bg-slate-900/60 hover:bg-slate-800/60 border border-slate-800 hover:border-cyan-900/80 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-3"
+                  className="p-3.5 rounded-lg bg-slate-900/60 hover:bg-slate-800/60 border border-slate-800 hover:border-slate-700/80 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-3"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-slate-400 font-bold">{time}</span>

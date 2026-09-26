@@ -21,11 +21,11 @@ export const AttackGraphView: React.FC<AttackGraphViewProps> = ({
   allEvents,
 }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-mono font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
+          <h1 className="text-xl font-sans font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
             <Network className="w-5 h-5 text-cyan-400" />
             <span>INTERACTIVE ATTACK RECONSTRUCTION GRAPH</span>
           </h1>
@@ -35,7 +35,7 @@ export const AttackGraphView: React.FC<AttackGraphViewProps> = ({
         </div>
 
         {allIncidents.length > 1 && currentIncident && (
-          <div className="flex items-center gap-2 font-mono text-xs">
+          <div className="flex items-center gap-2 font-sans text-xs">
             <span className="text-slate-400">ACTIVE INCIDENT:</span>
             <select
               value={currentIncident.id}
@@ -53,8 +53,8 @@ export const AttackGraphView: React.FC<AttackGraphViewProps> = ({
       </div>
 
       {/* Main Graph Card */}
-      <div className="p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl space-y-4">
-        <div className="flex items-center justify-between font-mono text-xs text-slate-400 pb-2 border-b border-slate-800">
+      <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-4">
+        <div className="flex items-center justify-between font-sans text-xs text-slate-400 pb-2 border-b border-slate-800">
           <div className="flex items-center gap-4">
             <span>NODES: <strong className="text-cyan-300">{graphData?.nodes?.length || 0}</strong></span>
             <span>EDGES: <strong className="text-cyan-300">{graphData?.edges?.length || 0}</strong></span>

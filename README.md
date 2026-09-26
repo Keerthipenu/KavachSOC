@@ -1,6 +1,6 @@
-# SENTINEL-X
+# KavachSOC
 
-SENTINEL-X is a local, hackathon-grade prototype for **AI-Driven Adaptive Cyber Defense and Automated Threat Hunting**. It ingests deterministic simulated telemetry, combines explicit rules with Isolation Forest anomaly signals, correlates activity into incidents, reconstructs evidence-backed attack paths, runs a structured LangGraph investigation, and proposes **simulation-only** containment actions that require human approval.
+KavachSOC is a local, hackathon-grade prototype for **AI-Driven Adaptive Cyber Defense and Automated Threat Hunting**. It ingests deterministic simulated telemetry, combines explicit rules with Isolation Forest anomaly signals, correlates activity into incidents, reconstructs evidence-backed attack paths, runs a structured LangGraph investigation, and proposes **simulation-only** containment actions that require human approval.
 
 > Safety boundary: this project never executes host commands, changes a firewall, disables a real identity, or contacts an endpoint. Response actions only update rows in the local `simulated_assets` table.
 

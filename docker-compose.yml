@@ -1,5 +1,5 @@
 services:
-  sentinel-x:
+  kavachsoc:
     build: .
     ports:
       - "8000:8000"
@@ -10,4 +10,3 @@ services:
       - sentinel-data:/data
 volumes:
   sentinel-data:
-

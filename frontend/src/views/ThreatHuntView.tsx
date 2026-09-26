@@ -66,10 +66,10 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
   }, [filteredEvents, groupBy]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div>
-        <h1 className="text-xl font-mono font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
+        <h1 className="text-xl font-sans font-bold tracking-wider text-slate-100 flex items-center gap-2.5">
           <Crosshair className="w-5 h-5 text-cyan-400" />
           <span>ADVANCED THREAT HUNTING WORKBENCH</span>
         </h1>
@@ -79,7 +79,7 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
       </div>
 
       {/* Query Bar & Presets */}
-      <div className="p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-xl space-y-4">
+      <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-4">
         {/* Main Search Input */}
         <div className="relative">
           <Search className="w-5 h-5 text-cyan-400 absolute left-4 top-3.5" />
@@ -88,12 +88,12 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Type a natural hunt query, e.g., 'Show all events associated with workstation-a' or filter by IP, User, Hash..."
-            className="w-full bg-[#080d17] border border-slate-700/80 rounded-lg pl-12 pr-4 py-3 text-sm font-mono text-cyan-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-400 shadow-inner"
+            className="w-full bg-[#111820] border border-slate-700/80 rounded-lg pl-12 pr-4 py-3 text-sm font-sans text-cyan-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-400"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-4 top-3 text-xs font-mono text-slate-400 hover:text-slate-200"
+              className="absolute right-4 top-3 text-xs font-sans text-slate-400 hover:text-slate-200"
             >
               CLEAR
             </button>
@@ -101,7 +101,7 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
         </div>
 
         {/* Quick Presets */}
-        <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
+        <div className="flex flex-wrap items-center gap-2 font-sans text-xs">
           <span className="text-slate-400 text-[11px] mr-1">PRESET QUERIES:</span>
           {queryPresets.map((qp, idx) => (
             <button
@@ -115,7 +115,7 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
         </div>
 
         {/* Filters Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-3 border-t border-slate-800/80 font-mono text-xs">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-3 border-t border-slate-800/80 font-sans text-xs">
           {/* Severity */}
           <div>
             <label className="text-[10px] text-slate-400 uppercase block mb-1">SEVERITY</label>
@@ -191,7 +191,7 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
                 setSelectedUser('all');
                 setGroupBy('host');
               }}
-              className="w-full py-1.5 px-3 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono transition-colors"
+              className="w-full py-1.5 px-3 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-sans transition-colors"
             >
               RESET FILTERS
             </button>
@@ -200,14 +200,14 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
       </div>
 
       {/* Results Header */}
-      <div className="flex items-center justify-between font-mono text-xs text-slate-400">
+      <div className="flex items-center justify-between font-sans text-xs text-slate-400">
         <span>MATCHED: {filteredEvents.length} CORRELATED EVENTS</span>
         <span>VIEW MODE: {groupBy !== 'none' ? `ENTITY CLUSTERS (${groupBy.toUpperCase()})` : 'FLAT STREAM'}</span>
       </div>
 
       {/* Correlated Clusters or Flat View */}
       {filteredEvents.length === 0 ? (
-        <div className="p-12 text-center font-mono text-xs text-slate-500 bg-[#0b1220] rounded-xl border border-slate-800">
+        <div className="p-12 text-center font-sans text-xs text-slate-500 bg-[#151b23] rounded-lg border border-slate-800">
           No events match the current threat hunting parameters. Try clearing the query or resetting filters.
         </div>
       ) : groupedEvents ? (
@@ -220,10 +220,10 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
             return (
               <div
                 key={entityName}
-                className="p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-lg space-y-3"
+                className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-3"
               >
                 {/* Cluster Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800 font-mono">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800 font-sans">
                   <div className="flex items-center gap-3">
                     <div className={`p-2 rounded ${hasCritical ? 'bg-rose-500/10 border border-rose-500/30' : 'bg-cyan-500/10 border border-cyan-500/30'}`}>
                       {groupBy === 'host' ? <Server className="w-4 h-4 text-cyan-400" /> : groupBy === 'user' ? <User className="w-4 h-4 text-purple-400" /> : <Globe className="w-4 h-4 text-amber-400" />}
@@ -249,7 +249,7 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
                 </div>
 
                 {/* Cluster Events Table */}
-                <div className="divide-y divide-slate-800/60 font-mono text-xs">
+                <div className="divide-y divide-slate-800/60 font-sans text-xs">
                   {clusterEvents.map((evt) => (
                     <div
                       key={evt.id}
@@ -281,12 +281,12 @@ export const ThreatHuntView: React.FC<ThreatHuntViewProps> = ({
         </div>
       ) : (
         /* Flat Stream View */
-        <div className="p-5 rounded-xl bg-[#0b1220] border border-cyan-950/70 shadow-lg space-y-2">
+        <div className="p-4 rounded-lg bg-[#151b23] border border-slate-800 space-y-2">
           {filteredEvents.map((evt) => (
             <div
               key={evt.id}
               onClick={() => onInspectEvent(evt)}
-              className="p-3 rounded bg-slate-900/60 hover:bg-slate-800/60 border border-slate-800 hover:border-cyan-700/60 cursor-pointer transition-colors flex items-center justify-between font-mono text-xs"
+              className="p-3 rounded bg-slate-900/60 hover:bg-slate-800/60 border border-slate-800 hover:border-cyan-700/60 cursor-pointer transition-colors flex items-center justify-between font-sans text-xs"
             >
               <div className="flex items-center gap-3">
                 <span className="font-bold text-cyan-300">{evt.id}</span>

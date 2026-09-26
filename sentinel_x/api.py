@@ -28,7 +28,7 @@ async def lifespan(_: FastAPI):
     yield
 
 
-app = FastAPI(title="SENTINEL-X", version="0.1.0", description="Safe agentic cyber-defense simulation", lifespan=lifespan)
+app = FastAPI(title="KavachSOC", version="0.1.0", description="Safe agentic cyber-defense simulation", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
@@ -44,7 +44,7 @@ def _rows(db: Session, model: Any, limit: int) -> list[dict[str, Any]]:
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "service": "sentinel-x", "mode": "DEMO", "real_actions_enabled": False}
+    return {"status": "ok", "service": "kavachsoc", "mode": "DEMO", "real_actions_enabled": False}
 
 
 @app.get("/events")

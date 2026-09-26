@@ -15,8 +15,8 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ severity, status, dete
     let dot = 'bg-slate-400';
 
     if (s === 'critical') {
-      bg = 'bg-rose-950/40 text-rose-300 border-rose-800/60 shadow-[0_0_8px_rgba(244,63,94,0.2)]';
-      dot = 'bg-rose-500 animate-pulse';
+      bg = 'bg-rose-950/40 text-rose-300 border-rose-800/60';
+      dot = 'bg-rose-500';
     } else if (s === 'high') {
       bg = 'bg-amber-950/40 text-amber-300 border-amber-800/60';
       dot = 'bg-amber-500';
@@ -29,7 +29,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ severity, status, dete
     }
 
     return (
-      <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-mono font-medium tracking-wide uppercase border ${bg} ${className}`}>
+      <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-sans font-medium tracking-wide uppercase border ${bg} ${className}`}>
         <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
         {severity}
       </span>
@@ -38,12 +38,12 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ severity, status, dete
 
   if (detector) {
     let style = 'bg-slate-800/70 text-slate-300 border-slate-700';
-    if (detector === 'HYBRID') style = 'bg-purple-950/50 text-purple-300 border-purple-800/60 shadow-[0_0_8px_rgba(168,85,247,0.2)]';
+    if (detector === 'HYBRID') style = 'bg-slate-800/80 text-slate-200 border-slate-700';
     if (detector === 'RULE') style = 'bg-blue-950/50 text-blue-300 border-blue-800/60';
     if (detector === 'ML') style = 'bg-cyan-950/50 text-cyan-300 border-cyan-800/60';
 
     return (
-      <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-mono tracking-wider font-semibold border ${style} ${className}`}>
+      <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-sans tracking-wider font-semibold border ${style} ${className}`}>
         {detector}
       </span>
     );
@@ -61,7 +61,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ severity, status, dete
     }
 
     return (
-      <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium capitalize border ${style} ${className}`}>
+      <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-sans font-medium capitalize border ${style} ${className}`}>
         {status.replace(/_/g, ' ')}
       </span>
     );

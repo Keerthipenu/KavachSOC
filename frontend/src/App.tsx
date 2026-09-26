@@ -267,7 +267,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b12] text-[#e2edf8] font-sans flex flex-col">
+    <div className="min-h-screen bg-[#0d1117] text-[#e6edf3] font-sans flex flex-col">
       {/* Top Bar with brand status & scenario controls */}
       <TopBar
         currentTab={currentTab}
@@ -286,7 +286,7 @@ export const App: React.FC = () => {
 
       {/* Backend Offline Banner */}
       {backendError && (
-        <div className="bg-rose-950/90 border-b border-rose-700/80 px-6 py-2.5 flex items-center justify-between text-xs font-mono text-rose-200">
+        <div className="bg-rose-950/90 border-b border-rose-700/80 px-6 py-2.5 flex items-center justify-between text-xs font-sans text-rose-200">
           <div className="flex items-center gap-2">
             <WifiOff className="w-4 h-4 text-rose-400 animate-pulse" />
             <span>BACKEND OFFLINE: {backendError}</span>
@@ -302,7 +302,7 @@ export const App: React.FC = () => {
 
       {/* Insufficient Evidence / Benign Notice Banner (Prompt specified) */}
       {insufficientDataNotice && (
-        <div className="bg-cyan-950/70 border-b border-cyan-800/80 px-6 py-2.5 flex items-center justify-between text-xs font-mono text-cyan-200 animate-in fade-in">
+        <div className="bg-cyan-950/70 border-b border-cyan-800/80 px-6 py-2.5 flex items-center justify-between text-xs font-sans text-cyan-200 animate-in fade-in">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-cyan-400" />
             <span>BENIGN ACTIVITY CLASSIFICATION: {insufficientDataNotice}</span>
@@ -317,7 +317,7 @@ export const App: React.FC = () => {
       )}
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-[1720px] w-full mx-auto px-4 sm:px-6 py-6">
+      <main className="flex-1 max-w-[1720px] w-full mx-auto px-4 sm:px-6 py-4">
         {currentTab === 'overview' && (
           <OverviewView
             events={events}
@@ -414,10 +414,10 @@ export const App: React.FC = () => {
       />
 
       {/* Footer */}
-      <footer className="w-full bg-[#05080f] border-t border-slate-900 px-6 py-3 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-400">
+      <footer className="w-full bg-[#0d1117] border-t border-slate-900 px-6 py-3 flex flex-col sm:flex-row items-center justify-between text-xs font-sans text-slate-400">
         <div className="flex items-center gap-2">
           <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-          <span>SENTINEL-X AI SOC v0.1.0 · COMPETITION-READY BUILD</span>
+          <span>KavachSOC v0.1.0 · SECURITY OPERATIONS PLATFORM</span>
         </div>
         <div className="flex items-center gap-4 mt-2 sm:mt-0 text-[11px]">
           <span>SAFETY BOUNDARY: SIMULATION ONLY</span>
