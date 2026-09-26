@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from sentinel_x.api import app
+from sentinel_x.api import app as application
 from sentinel_x.database import Base, SessionLocal, engine
 from sentinel_x.service import reset_demo
 
@@ -16,6 +16,5 @@ def clean_database():
 
 @pytest.fixture
 def client():
-    with TestClient(app) as test_client:
+    with TestClient(application) as test_client:
         yield test_client
-
