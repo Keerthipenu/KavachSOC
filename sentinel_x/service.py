@@ -7,7 +7,7 @@ from uuid import uuid4
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
-from .agents import run_agent_workflow
+from .agents import RULE_RATIONALE, run_agent_workflow
 from .detection import SEVERITY_RANK, anomaly_detect, rule_detect
 from .graph import build_attack_graph, graph_payload
 from .mitre import map_events
@@ -93,7 +93,9 @@ def analyze_events(db: Session, events: list[SecurityEvent], scenario: str) -> d
         score_values = [float(anomalies[e.id]["anomaly_score"]) for e in related if e.id in anomalies]
         is_hybrid = any(anomalies[e.id]["anomaly_label"] for e in related if e.id in anomalies)
         db.add(Alert(id=_id("ALT"), title=finding.alert, severity=finding.severity,
-            confidence=finding.confidence, explanation=f"Rule {finding.rule_id} matched explicit evidence; severity reflects observed behavior.",
+            confidence=finding.confidence,
+            explanation=(f"{RULE_RATIONALE.get(finding.rule_id, 'Observed behavior matched a deterministic detection rule.')} "
+                         f"Matched {len(finding.evidence)} evidence event(s); severity reflects the observed behavior."),
             evidence=finding.evidence, mitre_technique=map_events(related), incident_id=incident.id,
             detector="HYBRID" if is_hybrid else "RULE", rule_ids=[finding.rule_id],
             anomaly_score=max(score_values) if score_values else None))

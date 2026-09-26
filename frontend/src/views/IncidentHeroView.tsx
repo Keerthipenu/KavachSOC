@@ -51,21 +51,84 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
   const hypotheses = incident?.investigation?.investigation_agent?.hypotheses || [];
   const primaryHypothesis = hypotheses[0];
   const secondaryHypotheses = hypotheses.slice(1);
+  const incidentAlerts = incident?.alerts || [];
+
+  const detectionSignals = useMemo(() => {
+    const workflowSignals = incident?.investigation?.detection_analyst?.signals || [];
+    if (workflowSignals.length > 0) {
+      const ruleSignals = workflowSignals.map((signal) => ({
+        id: signal.rule_id,
+        title: signal.title,
+        severity: signal.severity,
+        confidence: signal.confidence,
+        evidence: signal.evidence,
+        detail: signal.rationale,
+        detector: signal.detector || 'RULE',
+        anomalyScore: null as number | null,
+      }));
+      const anomalySignals = incidentAlerts
+        .filter((alert) => alert.detector === 'ML')
+        .map((alert) => ({
+          id: 'ML-ANOMALY',
+          title: alert.title,
+          severity: alert.severity,
+          confidence: alert.confidence,
+          evidence: alert.evidence,
+          detail: alert.explanation,
+          detector: alert.detector,
+          anomalyScore: alert.anomaly_score,
+        }));
+      return [...ruleSignals, ...anomalySignals];
+    }
+    return incidentAlerts.map((alert) => ({
+      id: alert.rule_ids?.join(', ') || `${alert.detector}-ANOMALY`,
+      title: alert.title,
+      severity: alert.severity,
+      confidence: alert.confidence,
+      evidence: alert.evidence,
+      detail: alert.explanation,
+      detector: alert.detector,
+      anomalyScore: alert.anomaly_score,
+    }));
+  }, [incident, incidentAlerts]);
+
+  const evidenceCoverage = useMemo(() => {
+    const evidenceIds = new Set(detectionSignals.flatMap((signal) => signal.evidence));
+    return {
+      matchedRules: detectionSignals.filter((signal) => signal.detector === 'RULE').length,
+      correlationSignals: detectionSignals.filter((signal) => signal.detector === 'CORRELATION').length,
+      anomalySignals: incidentAlerts.filter((alert) => alert.detector === 'ML' || alert.detector === 'HYBRID').length,
+      evidenceEvents: evidenceIds.size,
+    };
+  }, [detectionSignals, incidentAlerts]);
 
   // Formatted supporting evidence
   const supportingEvidenceLabels = useMemo(() => {
     if (!incident || !timelineEvents) return [];
     const labels: string[] = [];
-    const types = new Set(timelineEvents.map((e) => e.event_type));
 
-    const failedCount = timelineEvents.filter((e) => e.event_type === 'login_failed').length;
-    if (failedCount > 0) labels.push(`${failedCount} failed authentication attempts`);
-    if (types.has('login_success')) labels.push('unusual successful login from suspicious IP');
-    if (types.has('process_start')) labels.push('PowerShell execution with encoded command');
-    if (types.has('credential_access')) labels.push('credential access indicator (lsass memory access)');
-    if (types.has('internal_connection')) labels.push('internal server connection on port 445');
-    if (types.has('remote_service')) labels.push('lateral movement via remote service');
-    if (types.has('unusual_outbound')) labels.push('unusual outbound transfer over 8443');
+    const failed = timelineEvents.filter((e) => e.event_type === 'login_failed');
+    const successfulLogin = timelineEvents.find((e) => e.event_type === 'login_success');
+    const execution = timelineEvents.find((e) => e.event_type === 'process_start');
+    const credentialAccess = timelineEvents.find((e) => e.event_type === 'credential_access');
+    const internalConnection = timelineEvents.find((e) => e.event_type === 'internal_connection');
+    const remoteService = timelineEvents.find((e) => e.event_type === 'remote_service');
+    const outbound = timelineEvents.find((e) => e.event_type === 'unusual_outbound');
+
+    if (failed.length > 0) {
+      const accounts = Array.from(new Set(failed.map((e) => e.user).filter(Boolean))).join(', ');
+      const sources = Array.from(new Set(failed.map((e) => e.source_ip).filter(Boolean))).join(', ');
+      labels.push(`${failed.length} failed authentications${accounts ? ` targeting ${accounts}` : ''}${sources ? ` from ${sources}` : ''}`);
+    }
+    if (successfulLogin) labels.push(`successful login from ${successfulLogin.source_ip || 'an unusual source'} after authentication failures`);
+    if (execution) labels.push(`endpoint execution: ${execution.command || execution.process || 'suspicious process'}`);
+    if (credentialAccess) labels.push(`credential access by ${credentialAccess.process || 'an untrusted process'} on ${credentialAccess.host || 'an endpoint'}`);
+    if (internalConnection) labels.push(`internal connection to ${internalConnection.destination_ip || 'an internal host'}:${internalConnection.raw_payload?.port || 'unknown port'}`);
+    if (remoteService) labels.push(`remote service activity on ${remoteService.host || remoteService.destination_ip || 'a peer asset'}`);
+    if (outbound) {
+      const bytes = Number(outbound.raw_payload?.bytes || 0);
+      labels.push(`${(bytes / 1_000_000).toFixed(1)} MB outbound transfer to ${outbound.destination_ip || 'an external destination'}`);
+    }
 
     return labels.length > 0 ? labels : ['Suspicious telemetry sequence mapped to attack chain'];
   }, [incident, timelineEvents]);
@@ -548,58 +611,96 @@ export const IncidentHeroView: React.FC<IncidentHeroViewProps> = ({
 
           {whyAlertExpanded && (
             <div className="mt-4 pt-4 border-t border-slate-800 space-y-4 animate-in fade-in">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+                <div className="p-3 rounded bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase block">Scenario</span>
+                  <span className="text-xs text-slate-200 font-semibold capitalize">{(timelineEvents[0]?.scenario || 'uploaded data').replace(/_/g, ' ')}</span>
+                </div>
+                <div className="p-3 rounded bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase block">Matched rules</span>
+                  <span className="text-sm text-cyan-300 font-semibold">{evidenceCoverage.matchedRules}</span>
+                </div>
+                <div className="p-3 rounded bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase block">Correlations</span>
+                  <span className="text-sm text-slate-200 font-semibold">{evidenceCoverage.correlationSignals}</span>
+                </div>
+                <div className="p-3 rounded bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase block">Anomaly support</span>
+                  <span className="text-sm text-slate-200 font-semibold">{evidenceCoverage.anomalySignals}</span>
+                </div>
+                <div className="p-3 rounded bg-slate-900/80 border border-slate-800">
+                  <span className="text-[10px] text-slate-500 uppercase block">Evidence coverage</span>
+                  <span className="text-sm text-slate-200 font-semibold">{evidenceCoverage.evidenceEvents}/{incident.event_ids.length}</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded bg-cyan-950/20 border border-cyan-900/60">
+                <span className="text-[10px] text-cyan-400 uppercase font-semibold block mb-1">Analytic conclusion</span>
+                <p className="text-sm text-slate-100 font-semibold">{incident.root_cause || primaryHypothesis?.title}</p>
+                <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                  {incident.investigation?.investigation_agent?.note || 'The conclusion is derived from correlated rule matches, anomaly support, and the ordered evidence chain below.'}
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Detection Signals */}
+                {/* Scenario-specific detection signals */}
                 <div className="p-3.5 rounded bg-slate-900/80 border border-slate-800">
                   <span className="text-[10px] text-slate-400 uppercase font-semibold block mb-2">
-                    DETECTION SIGNALS
+                    DETECTION SIGNALS FOR THIS ATTACK
                   </span>
-                  <ul className="space-y-1.5 text-xs text-slate-300 font-sans">
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                      <span>Rule <code className="text-cyan-300 font-sans">R-AUTH-001</code> triggered (repeated failed authentication)</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                      <span>Isolation Forest anomaly score: <strong className="text-purple-300 font-sans">0.92</strong></span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                      <span>7 rapid consecutive failed logins</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                      <span>New destination host connection to internal <code className="text-amber-300 font-sans">10.0.0.50:445</code></span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                      <span>Suspicious process execution: <code className="text-rose-300 font-sans">powershell.exe -EncodedCommand</code></span>
-                    </li>
-                  </ul>
+                  <div className="space-y-2">
+                    {detectionSignals.map((signal, index) => (
+                      <div key={`${signal.id}-${index}`} className="p-2.5 rounded bg-[#151b23] border border-slate-800">
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <code className="text-[11px] text-cyan-300">{signal.id}</code>
+                              <span className="text-xs text-slate-200 font-semibold">{signal.title}</span>
+                            </div>
+                            <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">{signal.detail}</p>
+                          </div>
+                          <StatusBadge severity={signal.severity} />
+                        </div>
+                        <div className="flex flex-wrap gap-3 mt-2 pt-2 border-t border-slate-800 text-[10px] text-slate-500">
+                          <span>{Math.round(signal.confidence * 100)}% confidence</span>
+                          <span>{signal.evidence.length} evidence event{signal.evidence.length === 1 ? '' : 's'}</span>
+                          {signal.anomalyScore !== null && <span>anomaly score {signal.anomalyScore.toFixed(3)}</span>}
+                        </div>
+                      </div>
+                    ))}
+                    {detectionSignals.length === 0 && (
+                      <p className="text-[11px] text-slate-500">No deterministic rule or anomaly signal is attached to this incident.</p>
+                    )}
+                  </div>
                 </div>
 
                 {/* Related Events */}
                 <div className="p-3.5 rounded bg-slate-900/80 border border-slate-800">
                   <span className="text-[10px] text-slate-400 uppercase font-semibold block mb-2">
-                    RELATED TELEMETRY EVIDENCE IDS
+                    ORDERED TELEMETRY EVIDENCE CHAIN
                   </span>
-                  <div className="flex flex-wrap gap-2">
-                    {incident.event_ids.map((eid) => (
+                  <div className="space-y-1.5 max-h-[380px] overflow-y-auto pr-1">
+                    {incident.event_ids.map((eid, index) => {
+                      const event = timelineEvents.find((item) => item.id === eid);
+                      return (
                       <button
                         key={eid}
                         onClick={() => {
-                          const evt = timelineEvents.find((e) => e.id === eid);
-                          if (evt) onInspectEvent(evt);
+                          if (event) onInspectEvent(event);
                         }}
-                        className="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-cyan-950 border border-slate-700 hover:border-cyan-500 text-cyan-300 text-xs font-sans flex items-center gap-1.5 transition-colors"
+                        className="w-full px-2.5 py-2 rounded bg-slate-800/60 hover:bg-cyan-950 border border-slate-800 hover:border-cyan-700 text-left flex items-center gap-2 transition-colors"
                       >
-                        <span>{eid}</span>
-                        <ExternalLink className="w-3 h-3" />
+                        <span className="w-5 h-5 rounded-full bg-slate-900 text-[10px] text-slate-400 flex items-center justify-center flex-shrink-0">{index + 1}</span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[11px] text-cyan-300">{eid}</span>
+                          <span className="block text-[10px] text-slate-400 truncate">{event?.event_type.replace(/_/g, ' ') || 'correlated telemetry'}</span>
+                        </span>
+                        <ExternalLink className="w-3 h-3 text-slate-500 flex-shrink-0" />
                       </button>
-                    ))}
+                    )})}
                   </div>
                   <p className="text-[11px] text-slate-500 font-sans mt-3">
-                    Click any evidence token to view full raw JSON telemetry payload.
+                    Ordered by event time. Select any row to inspect the source telemetry and raw payload.
                   </p>
                 </div>
               </div>

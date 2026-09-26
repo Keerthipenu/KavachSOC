@@ -80,6 +80,20 @@ export interface AgentWorkflow {
     patterns: string[];
     rule_ids: string[];
     evidence: string[];
+    signals?: Array<{
+      rule_id: string;
+      title: string;
+      severity: Severity;
+      confidence: number;
+      evidence: string[];
+      rationale: string;
+      detector?: 'RULE' | 'CORRELATION' | string;
+    }>;
+    coverage?: {
+      matched_rules: number;
+      correlation_signals?: number;
+      evidence_events: number;
+    };
   };
   investigation_agent?: InvestigationResult;
   mitre_agent?: {
